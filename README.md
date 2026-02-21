@@ -15,14 +15,30 @@ Example:
 
 ---
 
-Example (Search):
+##  Example (Search)
 
+```jsx
 import useDebounce from "../../utils/useDebounce";
+import { useEffect, useState } from "react";
 
-const debouncedSearch = useDebounce(searchQuery, 500);
+const Search = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const debouncedSearch = useDebounce(searchQuery, 500);
 
-useEffect(() => {
-  if (debouncedSearch) {
-    fetch(`/api/search?q=${debouncedSearch}`);
-  }
-}, [debouncedSearch]);
+  useEffect(() => {
+    if (debouncedSearch) {
+      fetch(`/api/search?q=${debouncedSearch}`);
+    }
+  }, [debouncedSearch]);
+
+  return (
+    <input
+      type="text"
+      value={searchQuery}
+      onChange={(e) => setSearchQuery(e.target.value)}
+      placeholder="Search..."
+    />
+  );
+};
+
+export default Search;
